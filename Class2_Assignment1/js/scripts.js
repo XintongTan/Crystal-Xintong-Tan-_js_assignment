@@ -15,8 +15,8 @@ console.log(rolled);
 
 switch (rolled) {
     case (1):
-        console.log("You rolled a one!");
-        break;
+        //console.log("You rolled a one!");
+        //break;
     case (2):
         console.log("You rolled a two!");
         break;
@@ -59,6 +59,12 @@ for (let i = 0; i < my_array.length ; i++) {
     console.log(my_array[i]);
 }
 
+let num = 1;
+while (num <= 10) {
+    console.log('#'.repeat(num))
+    num++;
+}
+
 //6.Loops and Conditions:
 
 for (let i = 1; i < 9; i++) {
@@ -67,6 +73,18 @@ for (let i = 1; i < 9; i++) {
     } else {
         console.log("  #  #  #  #");
     }
+}
+
+for (let y = 0; y < 8; y++) {
+    var board = '';
+    for (let x = 0; x < 8; x++) {
+        if ((x + y) % 2) {
+            board += '#';
+        } else {
+            board += '_';
+        }
+    }
+    console.log(board);
 }
 
 
