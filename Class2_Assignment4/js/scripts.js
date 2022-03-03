@@ -37,3 +37,14 @@ const aiBot = {
 }
 
 aiBot.checkAnswer("What date is it");
+
+
+//object within object 
+/*const aiBot = {
+    data: [
+        {
+            a: "",
+            q:["",""],
+        }
+    ]
+}*/
