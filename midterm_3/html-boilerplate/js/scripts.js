@@ -80,7 +80,7 @@ class getData {
             }
             xhr.open("GET", url, true);
             xhr.setRequestHeader("X-RapidAPI-Host", "climate-change75.p.rapidapi.com");
-            xhr.setRequestHeader("X-RapidAPI-Key", "df7ee3b6ecmsh3270131d2d27826p1346fdjsn3b9e212e8043");
+            xhr.setRequestHeader("X-RapidAPI-Key", "crystalkey");
             xhr.send();
             
 
