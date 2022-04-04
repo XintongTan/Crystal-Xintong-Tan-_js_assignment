@@ -1,12 +1,12 @@
-
-/*const data = null;*/
-
 const canvas = document.getElementById('canvas1');
 const ctx = canvas.getContext('2d');
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
-
+const canvas2 = document.getElementById('canvas2');
+const ctx2 = canvas2.getContext('2d');
+canvas2.width = window.innerWidth;
+canvas2.height = window.innerHeight;
 
 let particleArray = [];
 let adjustX = 5;
@@ -17,12 +17,8 @@ const mouse = {
     radius: 80
 }
 
-const canvas2 = document.getElementById('canvas2');
-const ctx2 = canvas2.getContext('2d');
-canvas2.width = window.innerWidth;
-canvas2.height = window.innerHeight;
-let Sea = [];
 
+let Sea = [];
 let seaData = 0;
 
 let buttonList = ['1999', '2000', '2001', '2002', '2003', '2004', '2005', '2006', '2007', '2008', '2009', '2010', '2011', '2012', '2013', '2014', '2015', '2016','2017','2018','2019']
@@ -31,74 +27,50 @@ for (let i = 0; i < buttonList.length; i++){
     button.addEventListener('click', function () {
         const addyear = new getData(buttonList[i]);
         addyear.get();
-        
-
     })
 }
 
 
-
-
-
-
 class getData {
-        constructor(year) {
+    constructor(year) {
             this.year = year;
-            
-        }
+         }
 
-        get() {
-            let url = 'https://climate-change75.p.rapidapi.com/seaLevel?startyear=' + this.year + '&endyear=' + this.year + '&select=seaLevelFromSatellitesInches';
-            let xhr = new XMLHttpRequest();
-            xhr.withCredentials = true;
-            let year = this.year;
-            xhr.onload = function () {
-                if (xhr.status === 200) {
-                    /*console.log(xhr.status);*/
-                    var data = JSON.parse(xhr.responseText);
-                    console.log(xhr.responseText);
-                    seaData = data[0].seaLevelFromSatellitesInches;
-                    /*console.log(seaData);*/
+    get() {
 
-                    /*const seas = new Seawater('rgb(11, 127, 171', seaData);*/
-
-
-                    document.getElementById("Sealevel").innerHTML += `<br>Sealevel Worldwide in ${year} is ${seaData} inches.`;
-
-
-                    
-
-                    /*let drawS = new Seawater('rgb(11, '+ (255-seaData*20) + ', 171', seaData*seaData*2);
-                    ctx2.clearRect(0, 0, canvas2.width, canvas2.height);
-                    drawS.draw(ctx2);
-
-                    console.log(drawS);*/
-                    
-
-                }else {
-                    document.getElementById("Output").innerHTML = "There was an error";
-                }
-            }
-            xhr.open("GET", url, true);
-            xhr.setRequestHeader("X-RapidAPI-Host", "climate-change75.p.rapidapi.com");
-            xhr.setRequestHeader("X-RapidAPI-Key", "df7ee3b6ecmsh3270131d2d27826p1346fdjsn3b9e212e8043");
-            xhr.send();
-            
-
-        }
-
+        let url = 'https://climate-change75.p.rapidapi.com/seaLevel?startyear=' + this.year + '&endyear=' + this.year + '&select=seaLevelFromSatellitesInches';
+        document.getElementById("Sealevel").innerHTML = `<br>Sealevel Worldwide in ${ this.year } is`;
         
+        const options = {
+            method: 'GET',
+            headers: {
+                'X-RapidAPI-Host': 'climate-change75.p.rapidapi.com',
+                'X-RapidAPI-Key': 'df7ee3b6ecmsh3270131d2d27826p1346fdjsn3b9e212e8043'
+            }
+        };
 
-
+        fetch(url, options)
+            .then(function (response) {
+                return response.json();
+            })
+            .then(function (resp) {
+                console.log(resp);
+                let data = resp[0];
+                seaData = data.seaLevelFromSatellitesInches;
+                console.log(seaData);
+                document.getElementById("Sealevel").innerHTML += `<br>${seaData} inches.`;
+            })
+            .catch(function (error) {
+                console.log("There was an error " + error);
+            });
+    }
 }
-
 
 
 function addSeawater() {
     
     Sea.push(new Seawater('rgb(11, ' + (160 - (seaData * 10)) + ', 171', ((seaData*seaData)/20)));
-
-    console.log(seaData);
+    /*console.log(seaData);*/
 }
 
 
@@ -112,7 +84,7 @@ class Seawater {
         this.vr = 0;
         this.vx = (Math.random() * 4) - 2;
         this.color = color;
-        /*console.log(ySpeed);*/
+        /*console.log(radius0);*/
         }
 
     update() {
@@ -134,9 +106,7 @@ class Seawater {
         currentCanvas2.fillStyle = this.color;
         currentCanvas2.fill();
        /* console.log(seaData);*/
-    }
-
-   
+    }  
 }
 
 
@@ -151,24 +121,16 @@ function handle(){
     if (Sea.length < (window.innerWidth / 4)) {
         addSeawater();
     }
-
-    console.log();
-
 }
 
 function animateB() {
     ctx2.clearRect(0, 0, canvas.width, canvas.height);
-
     handle();
-
     for (let i = Sea.length - 1; i >= 0; i--) {
         Sea[i].draw(ctx2);
-
     }
-
     requestAnimationFrame(animateB);
 }
-
 
 window.addEventListener('load', animateB());
 
@@ -176,8 +138,7 @@ window.addEventListener('resize', function () {
     canvas2.width = window.innerWidth;
     canvas2.height = window.innerHeight;
     canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-    
+    canvas.height = window.innerHeight;  
 });
 
 
@@ -257,7 +218,7 @@ function init() {
 }
 
 init();
-console.log(particleArray);
+/*console.log(particleArray);*/
 
 function animate() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
